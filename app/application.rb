@@ -5,8 +5,8 @@ class Application
     req = Rack::Request.new(env)
     
    if req.path.match(/items/)
-     search_term = req.params["item"]
-     resp.write search_item(search_term)
+    search_item = req.path.split("/items/").last 
+    item = @@
    else 
      resp.write "Route not found"
      resp.status = 404
@@ -14,13 +14,11 @@ class Application
    
     resp.finish
   end
-  
-  def search_item(search_term)
-    Item.all.detect(search_term) do |item|
-      binding.pry
-      if item.name == search_term 
-        return item.price
-      end
-    end
-  end
 end 
+if req.path.match(/songs/)
+ 
+      song_title = req.path.split("/songs/").last #turn /songs/Sorry into Sorry
+      song = @@songs.find{|s| s.title == song_title}
+ 
+      resp.write song.artist
+    end
